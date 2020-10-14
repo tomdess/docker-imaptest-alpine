@@ -16,6 +16,7 @@ RUN apk --no-cache add python2 && rm -rf /var/cache/apk/*
 
 COPY docker-entrypoint.sh /usr/local/bin 
 COPY create-testmbox.py /usr/local/bin
+COPY imaptest_wrapper.sh /usr/local/bin
 
 # add dovecot lib path
 RUN echo "/lib:/usr/local/lib:/usr/lib:/usr/lib/dovecot" > /etc/ld-musl-$(uname -m).path
@@ -26,4 +27,4 @@ WORKDIR /srv
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
-CMD ["/bin/ash"]
+CMD ["/usr/local/bin/imaptest_wrapper.sh"]
