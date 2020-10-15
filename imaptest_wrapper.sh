@@ -24,4 +24,6 @@ if [ -z ${IMAPTEST_CLIENTS} ]; then
   IMAPTEST_CLIENTS=50
 fi
 
-/usr/local/bin/imaptest mbox=/srv/testmbox host=${IMAPTEST_HOST} user=${IMAPTEST_USER} pass=${IMAPTEST_PASS} secs=${IMAPTEST_SECS} clients=${IMAPTEST_CLIENTS} $@
+DEFAULT_OPTIONS="no_tracking"
+
+/usr/local/bin/imaptest mbox=/srv/testmbox host=${IMAPTEST_HOST} user=${IMAPTEST_USER} pass=${IMAPTEST_PASS} secs=${IMAPTEST_SECS} clients=${IMAPTEST_CLIENTS} ${DEFAULT_OPTIONS} $@
