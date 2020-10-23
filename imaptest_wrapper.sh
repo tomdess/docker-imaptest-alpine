@@ -36,5 +36,6 @@ else
   else
     echo "ERROR: profile file not found"
     exit 1
+  fi
 fi
 
