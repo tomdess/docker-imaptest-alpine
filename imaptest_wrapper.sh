@@ -17,13 +17,24 @@ fi
 ## force defaults if not defined
 # secs = number of seconds to run the test
 if [ -z ${IMAPTEST_SECS} ]; then
-  IMAPTEST_SECS=3600
+  IMAPTEST_SECS=1800
 fi
 # clients = how many concurrent clients
 if [ -z ${IMAPTEST_CLIENTS} ]; then
-  IMAPTEST_CLIENTS=50
+  IMAPTEST_CLIENTS=10
 fi
 
-DEFAULT_OPTIONS="no_tracking"
+DEFAULT_OPTIONS="users=10000 no_tracking"
 
-/usr/local/bin/imaptest mbox=/srv/testmbox host=${IMAPTEST_HOST} user=${IMAPTEST_USER} pass=${IMAPTEST_PASS} secs=${IMAPTEST_SECS} clients=${IMAPTEST_CLIENTS} ${DEFAULT_OPTIONS} $@
+# if profile not defined run benchmark mode
+if [ -z ${IMAPTEST_PROFILE} ]; then
+  imaptest mbox=/srv/testmbox host=${IMAPTEST_HOST} user=${IMAPTEST_USER} pass=${IMAPTEST_PASS} secs=${IMAPTEST_SECS} clients=${IMAPTEST_CLIENTS} ${DEFAULT_OPTIONS} $@
+else
+  # else run profile
+  if [ -f /srv/${IMAPTEST_PROFILE} ]; then
+    imaptest mbox=/srv/testmbox host=${IMAPTEST_HOST} pass=${IMAPTEST_PASS} profile=${IMAPTEST_PROFILE} secs=${IMAPTEST_SECS} clients=${IMAPTEST_CLIENTS} ${DEFAULT_OPTIONS} $@
+  else
+    echo "ERROR: profile file not found"
+    exit 1
+fi
+
