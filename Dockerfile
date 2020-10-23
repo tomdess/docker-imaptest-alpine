@@ -3,12 +3,12 @@ FROM alpine:latest
 ENV IMAPTEST_DOWNLOAD_URL http://dovecot.org/nightly/imaptest/imaptest-latest.tar.gz
 
 # dovecot packages and build-base - imaptest - cleanup
-RUN apk --no-cache update && apk --no-cache add curl build-base dovecot dovecot-dev && \
+RUN apk --no-cache update && apk --no-cache add curl build-base libtool dovecot dovecot-dev && \
     cd /root && \
     curl -s -L ${IMAPTEST_DOWNLOAD_URL} | tar zxf - && \
     cd imaptest-* && \
     ./configure --with-dovecot=/usr/lib/dovecot && make install && \
-    apk --no-cache del --purge build-base dovecot-dev && rm -rf /var/cache/apk/* && \
+    apk --no-cache del --purge build-base libtool dovecot-dev && rm -rf /var/cache/apk/* && \
     cd /root && rm -rf imaptest-* && rm -f imaptest-latest.tar.gz
 
 # python
