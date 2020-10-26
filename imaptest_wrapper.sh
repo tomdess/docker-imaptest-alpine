@@ -32,7 +32,7 @@ if [ -z ${IMAPTEST_PROFILE} ]; then
 else
   # else run profile
   if [ -f /srv/${IMAPTEST_PROFILE} ]; then
-    imaptest mbox=/srv/testmbox host=${IMAPTEST_HOST} pass=${IMAPTEST_PASS} profile=${IMAPTEST_PROFILE} secs=${IMAPTEST_SECS} clients=${IMAPTEST_CLIENTS} ${DEFAULT_OPTIONS} $@
+    imaptest mbox=/srv/testmbox host=${IMAPTEST_HOST} pass=${IMAPTEST_PASS} profile=${IMAPTEST_PROFILE} user=profile secs=${IMAPTEST_SECS} clients=${IMAPTEST_CLIENTS} ${DEFAULT_OPTIONS} $@
   else
     echo "ERROR: profile file not found"
     exit 1
